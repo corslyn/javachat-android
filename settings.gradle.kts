@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "JavaChat"
 include(":app")
- 
+include(":page_inscription")
