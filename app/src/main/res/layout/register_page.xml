@@ -21,8 +21,9 @@
 
     <Button
         android:id="@+id/registerButton"
-        android:layout_width="125dp"
+        android:layout_width="150dp"
         android:layout_height="40dp"
+        android:text="Enregistrement"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,4 +57,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.33" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
