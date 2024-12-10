@@ -41,19 +41,9 @@ public class MainActivity extends AppCompatActivity {
         log_button = findViewById(R.id.log_button);
         inscrire = findViewById(R.id.inscrire);
 
-    }
-
-    private void action(){
-        inscrire.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                page_inscription();
-            }
-        });
-
         log_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 try {
                     log_in();
                 } catch (IOException e) {
@@ -61,7 +51,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        inscrire.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                page_inscription();
+            }
+        });
+
     }
+
+
 
     private void page_inscription() {
         Intent intent = new Intent(this, register_page.class);
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         String text = "connexion,"+log+"," + mdp ;
         byte[] sentBytes = text.getBytes();
 
-        InetAddress serverAddress = InetAddress.getByName("localhost");
+        InetAddress serverAddress = InetAddress.getByName(getString(R.string.ip_addr));
 
         DatagramPacket sendPacket = new DatagramPacket(sentBytes, sentBytes.length, serverAddress, 1337);
         clientSocket.send(sendPacket);

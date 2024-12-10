@@ -3,10 +3,8 @@ package com.assembleurnational.javachat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,7 +38,7 @@ public class Chat extends AppCompatActivity {
             return insets;
         });
         envoie = findViewById(R.id.sendButton);
-        message = findViewById(R.id.message);
+        message = findViewById(R.id.messageInput);
         Intent intent = getIntent();
         String user = intent.hasExtra("user") ? intent.getStringExtra("user") : "";
         String ami = intent.hasExtra("ami") ? intent.getStringExtra("amis") : "";
@@ -100,7 +98,7 @@ public class Chat extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    Envoie();
+                    envoie();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -108,7 +106,7 @@ public class Chat extends AppCompatActivity {
         });
     }
 
-    private void Envoie() throws IOException {
+    private void envoie() throws IOException {
         //initialisation socket client
         DatagramSocket clientSocket = new DatagramSocket();
 
@@ -118,7 +116,7 @@ public class Chat extends AppCompatActivity {
         String text = "envoie_message,"+User+"," + Ami + message.getText().toString() ;
         byte[] sentBytes = text.getBytes();
 
-        InetAddress serverAddress = InetAddress.getByName("localhost");
+        InetAddress serverAddress = InetAddress.getByName(getString(R.string.ip_addr));
 
         DatagramPacket sendPacket = new DatagramPacket(sentBytes, sentBytes.length, serverAddress, 1337);
         clientSocket.send(sendPacket);
