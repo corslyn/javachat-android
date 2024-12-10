@@ -17,10 +17,12 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.List;
 
 public class page_accueil extends AppCompatActivity {
     RecyclerView listeAmis;
-    String[] amis;
+    List<String> amis;
+    FriendAdapter adapter;
     int amis_id = 0;
 
     @SuppressLint("MissingInflatedId")
@@ -77,12 +79,49 @@ public class page_accueil extends AppCompatActivity {
         String[] messplit = message.split(",");
         int j = 4;
         while (messplit[j].equals("true") || j < 14){
-            amis[amis_id] = messplit[j];
+            amis.set(amis_id, messplit[j]);
             amis_id += 1;
             j += 1;
         }
+        adapter = new FriendAdapter(amis, friendName -> {
+            // TODO Ajouter activity chat
+
+        });
+        listeAmis.setAdapter(adapter);
 
     }
+
+    private void fetchFriends(String user) {
+        try (DatagramSocket clientSocket = new DatagramSocket()) {
+            // Send request to server
+            String text = user;
+            byte[] sentBytes = text.getBytes();
+            InetAddress serverAddress = InetAddress.getByName("localhost");
+            DatagramPacket sendPacket = new DatagramPacket(sentBytes, sentBytes.length, serverAddress, 1337);
+            clientSocket.send(sendPacket);
+
+            // Receive response from server
+            byte[] receiveBytes = new byte[256];
+            DatagramPacket receivePacket = new DatagramPacket(receiveBytes, receiveBytes.length);
+            clientSocket.receive(receivePacket);
+
+            String message = new String(receivePacket.getData(), 0, receivePacket.getLength());
+            String[] messplit = message.split(",");
+
+            // Process response and populate the friend list
+            for (int j = 3; j < messplit.length && !messplit[j].equals("false"); j++) {
+                amis.add(messplit[j]);
+            }
+
+            // Update RecyclerView on the UI thread
+            runOnUiThread(() -> adapter.notifyDataSetChanged());
+        } catch (SocketException | UnknownHostException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
 
 
 }
