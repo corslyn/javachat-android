@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         String mdp = password.getText().toString();
 
         // Envoie
-        String text = "connecxion, "+log+", " + mdp ;
+        String text = "connexion, "+log+", " + mdp ;
         byte[] sentBytes = text.getBytes();
 
         InetAddress serverAddress = InetAddress.getByName("localhost");

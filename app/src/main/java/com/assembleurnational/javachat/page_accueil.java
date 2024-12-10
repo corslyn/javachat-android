@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -18,6 +19,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 
 public class page_accueil extends AppCompatActivity {
+    RecyclerView listeAmis;
     String[] amis;
     int amis_id = 0;
 
@@ -33,6 +35,7 @@ public class page_accueil extends AppCompatActivity {
              user = intent.getStringExtra("user"); // on récupère la valeur associée à la clé
         }
 
+        listeAmis = findViewById(R.id.listeAmis);
         //initialisation socket client
         DatagramSocket clientSocket = null;
         try {
@@ -78,8 +81,6 @@ public class page_accueil extends AppCompatActivity {
             amis_id += 1;
             j += 1;
         }
-
-
 
     }
 }
