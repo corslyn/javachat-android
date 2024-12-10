@@ -31,97 +31,52 @@ public class page_accueil extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.loggedin_page);
-        Intent intent = getIntent();
-        String user = "";
-        if (intent.hasExtra("user")){ // vérifie qu'une valeur est associée à la clé “edittext”
-             user = intent.getStringExtra("user"); // on récupère la valeur associée à la clé
-        }
-
-        listeAmis = findViewById(R.id.listeAmis);
-        //initialisation socket client
-        DatagramSocket clientSocket = null;
-        try {
-            clientSocket = new DatagramSocket();
-        } catch (SocketException e) {
-            throw new RuntimeException(e);
-        }
-
-        String log = user;
-
-        // Envoie
-        String text = "recuperer_amis,"+user;
-        byte[] sentBytes = text.getBytes();
-
-        InetAddress serverAddress = null;
-        try {
-            serverAddress = InetAddress.getByName("localhost");
-        } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
-        }
-
-        DatagramPacket sendPacket = new DatagramPacket(sentBytes, sentBytes.length, serverAddress, 1337);
-        try {
-            clientSocket.send(sendPacket);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        //reception
-        byte[] receiveBytes = new byte[256];
-        DatagramPacket receivePacket = new DatagramPacket(receiveBytes, receiveBytes.length);
-        try {
-            clientSocket.receive(receivePacket);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        String message = new String (receivePacket.getData(), 0, receivePacket.getLength());
-        String[] messplit = message.split(",");
-        int j = 4;
-        while (messplit[j].equals("true") || j < 14){
-            amis.set(amis_id, messplit[j]);
-            amis_id += 1;
-            j += 1;
-        }
         adapter = new FriendAdapter(amis, friendName -> {
-            // TODO Ajouter activity chat
-
+            Intent chatIntent = new Intent(this, Chat.class);
+            chatIntent.putExtra("nomAmi", friendName);
+            startActivity(chatIntent);
         });
+        listeAmis = findViewById(R.id.listeAmis);
         listeAmis.setAdapter(adapter);
 
+        Intent intent = getIntent();
+        String user = intent.hasExtra("user") ? intent.getStringExtra("user") : "";
+
+        new Thread(() -> fetchFriends(user)).start();
     }
 
     private void fetchFriends(String user) {
         try (DatagramSocket clientSocket = new DatagramSocket()) {
-            // Send request to server
-            String text = user;
-            byte[] sentBytes = text.getBytes();
+            // envoi d'une requete au server
+            String request = "recuperer_amis," + user;
+            byte[] sentBytes = request.getBytes();
             InetAddress serverAddress = InetAddress.getByName("localhost");
             DatagramPacket sendPacket = new DatagramPacket(sentBytes, sentBytes.length, serverAddress, 1337);
             clientSocket.send(sendPacket);
 
-            // Receive response from server
+            // reception de la reponse
             byte[] receiveBytes = new byte[256];
             DatagramPacket receivePacket = new DatagramPacket(receiveBytes, receiveBytes.length);
             clientSocket.receive(receivePacket);
 
+            // traitement de la reponse
             String message = new String(receivePacket.getData(), 0, receivePacket.getLength());
             String[] messplit = message.split(",");
 
-            // Process response and populate the friend list
-            for (int j = 3; j < messplit.length && !messplit[j].equals("false"); j++) {
-                amis.add(messplit[j]);
+            // remplissage de la liste d'amis
+            int j = 4;
+            while (messplit[j].equals("true") || j < 14){
+                amis.set(amis_id, messplit[j]);
+                amis_id += 1;
+                j += 1;
             }
 
-            // Update RecyclerView on the UI thread
+            // mise a jour de l'ui
             runOnUiThread(() -> adapter.notifyDataSetChanged());
-        } catch (SocketException | UnknownHostException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+
         }
     }
-}
-
 
 }
