@@ -3,6 +3,9 @@ package com.assembleurnational.javachat;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +23,10 @@ import java.net.UnknownHostException;
 import java.util.List;
 
 public class page_accueil extends AppCompatActivity {
+    ImageButton addFriends;
+    ImageButton delFriends;
+    ImageButton Settings;
+    ImageButton  Delete;
     RecyclerView listeAmis;
     List<String> amis;
     FriendAdapter adapter;
@@ -38,12 +45,20 @@ public class page_accueil extends AppCompatActivity {
         });
         listeAmis = findViewById(R.id.listeAmis);
         listeAmis.setAdapter(adapter);
+        addFriends = findViewById(R.id.addFriend);
+        delFriends = findViewById(R.id.deleteFriend);
+        Delete = findViewById(R.id.delete);
+        Settings = findViewById(R.id.settings);
+
+
 
         Intent intent = getIntent();
         String user = intent.hasExtra("user") ? intent.getStringExtra("user") : "";
 
         new Thread(() -> fetchFriends(user)).start();
+
     }
+
 
     private void fetchFriends(String user) {
         try (DatagramSocket clientSocket = new DatagramSocket()) {
@@ -77,6 +92,51 @@ public class page_accueil extends AppCompatActivity {
             e.printStackTrace();
 
         }
+    }
+
+    private void action(){
+        addFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddFriend();
+            }
+        });
+
+        delFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DelFriend();
+            }
+        });
+        Delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                delete();
+            }
+        });
+
+        Settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setting();
+            }
+        });
+    }
+
+    private void AddFriend() {
+        // faire commandce piur ajout d'ami
+    }
+
+    private void DelFriend(){
+        // faire effacement
+    }
+
+    private void setting(){
+        // faire un truc mais je sais oas encore quoi
+    }
+
+    private void delete(){
+        // faire le suppression de compte
     }
 
 }

@@ -66,7 +66,7 @@ public class register_page extends AppCompatActivity {
         DatagramSocket clientSocket = new DatagramSocket();
 
         //envoie
-        String text = "Inscription, " + name + ", " + mdp;
+        String text = "Inscription," + name + "," + mdp;
         byte[] sentBytes = text.getBytes();
 
         InetAddress serverAddress = InetAddress.getByName("localhost");
