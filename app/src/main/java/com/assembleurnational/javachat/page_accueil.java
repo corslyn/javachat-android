@@ -1,5 +1,6 @@
 package com.assembleurnational.javachat;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -20,21 +21,18 @@ public class page_accueil extends AppCompatActivity {
     String[] amis;
     int amis_id = 0;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_page_accueil);
+        setContentView(R.layout.loggedin_page);
         Intent intent = getIntent();
         String user = "";
         if (intent.hasExtra("user")){ // vérifie qu'une valeur est associée à la clé “edittext”
              user = intent.getStringExtra("user"); // on récupère la valeur associée à la clé
         }
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
         for (int i = 0; i<10; i++){
             //initialisation socket client
             DatagramSocket clientSocket = null;
