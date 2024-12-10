@@ -93,8 +93,9 @@ public class MainActivity extends AppCompatActivity {
         String message = new String (receivePacket.getData(), 0, receivePacket.getLength());
         String[] messplit = message.split(",");
         if (messplit[3].equals("OK")){
-            //Intent intent = new Intent(this, page_accueil.java);
-            //startActivity(intent);
+            Intent intent = new Intent(this, page_accueil.class);
+            intent.putExtra("user", user.getText().toString());
+            startActivity(intent);
         }
         else {
             String toast = "Erreur login mdp";
