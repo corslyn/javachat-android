@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">JavaChat</string>
+    <string name="ip_addr" translatable="false">192.168.162.148</string>
 </resources>

@@ -3,9 +3,8 @@ package com.assembleurnational.javachat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,7 +23,7 @@ public class Chat extends AppCompatActivity {
     boolean suite = true;
     int compteur = 0;
     String[] tabmessage ;
-    Button envoie;
+    ImageButton envoie;
     String User ;
     String Ami;
     EditText message;
@@ -38,8 +37,8 @@ public class Chat extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        envoie = findViewById(R.id.envoie);
-        message = findViewById(R.id.message);
+        envoie = findViewById(R.id.sendButton);
+        message = findViewById(R.id.messageInput);
         Intent intent = getIntent();
         String user = intent.hasExtra("user") ? intent.getStringExtra("user") : "";
         String ami = intent.hasExtra("ami") ? intent.getStringExtra("amis") : "";
@@ -98,12 +97,16 @@ public class Chat extends AppCompatActivity {
         envoie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Envoie();
+                try {
+                    envoie();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }
 
-    private void Envoie() throws IOException {
+    private void envoie() throws IOException {
         //initialisation socket client
         DatagramSocket clientSocket = new DatagramSocket();
 
@@ -113,7 +116,7 @@ public class Chat extends AppCompatActivity {
         String text = "envoie_message,"+User+"," + Ami + message.getText().toString() ;
         byte[] sentBytes = text.getBytes();
 
-        InetAddress serverAddress = InetAddress.getByName("localhost");
+        InetAddress serverAddress = InetAddress.getByName(getString(R.string.ip_addr));
 
         DatagramPacket sendPacket = new DatagramPacket(sentBytes, sentBytes.length, serverAddress, 1337);
         clientSocket.send(sendPacket);

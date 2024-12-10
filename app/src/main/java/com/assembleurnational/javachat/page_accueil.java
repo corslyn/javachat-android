@@ -65,7 +65,7 @@ public class page_accueil extends AppCompatActivity {
             // envoi d'une requete au server
             String request = "recuperer_amis," + user;
             byte[] sentBytes = request.getBytes();
-            InetAddress serverAddress = InetAddress.getByName("localhost");
+            InetAddress serverAddress = InetAddress.getByName(getString(R.string.ip_addr));
             DatagramPacket sendPacket = new DatagramPacket(sentBytes, sentBytes.length, serverAddress, 1337);
             clientSocket.send(sendPacket);
 
