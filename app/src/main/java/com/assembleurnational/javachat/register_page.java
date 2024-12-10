@@ -32,9 +32,6 @@ public class register_page extends AppCompatActivity {
         registerPassword = findViewById(R.id.registerPassword);
         registerButton = findViewById(R.id.registerButton);
         retour = findViewById(R.id.retour);
-    }
-
-    private void action() {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,6 +50,8 @@ public class register_page extends AppCompatActivity {
         });
     }
 
+
+
     private void retours(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -63,6 +62,7 @@ public class register_page extends AppCompatActivity {
         String mdp = registerPassword.getText().toString();
 
         //initialisation
+
         DatagramSocket clientSocket = new DatagramSocket();
 
         //envoie
