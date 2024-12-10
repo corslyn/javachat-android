@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -34,6 +34,7 @@
                 android:layout_marginBottom="140dp">
 
             </androidx.recyclerview.widget.RecyclerView>
+
         </LinearLayout>
     </ScrollView>
 
