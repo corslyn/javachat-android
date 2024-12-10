@@ -44,7 +44,7 @@ public class page_accueil extends AppCompatActivity {
         String log = user;
 
         // Envoie
-        String text = "";
+        String text = "recuperer_amis,"+user;
         byte[] sentBytes = text.getBytes();
 
         InetAddress serverAddress = null;
@@ -72,8 +72,8 @@ public class page_accueil extends AppCompatActivity {
 
         String message = new String (receivePacket.getData(), 0, receivePacket.getLength());
         String[] messplit = message.split(",");
-        int j = 3;
-        while (messplit[j].equals("true") || j < 13){
+        int j = 4;
+        while (messplit[j].equals("true") || j < 14){
             amis[amis_id] = messplit[j];
             amis_id += 1;
             j += 1;
@@ -82,4 +82,6 @@ public class page_accueil extends AppCompatActivity {
 
 
     }
+
+
 }
