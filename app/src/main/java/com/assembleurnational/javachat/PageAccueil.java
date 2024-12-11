@@ -198,6 +198,31 @@ public class PageAccueil extends AppCompatActivity {
 
     private void delete(){
         // faire le suppression de compte
+        new Thread(() -> {
+            try {
+                String request = "supprimer_utilisateur," + user; // Commande pour supprimer l'utilisateur
+                byte[] sentBytes = request.getBytes();
+
+                Server.send(sentBytes); // Envoyer la requête au serveur
+
+                String response = Server.received(); // Lire la réponse du serveur
+
+                runOnUiThread(() -> {
+                    if (response.equals("succès")) {
+                        Toast.makeText(this, "Compte supprimé avec succès.", Toast.LENGTH_LONG).show();
+                        // Retour à l'écran de connexion
+                        Intent loginIntent = new Intent(this, MainActivity.class);
+                        startActivity(loginIntent);
+                        finish(); // Ferme l'activité actuelle
+                    } else {
+                        Toast.makeText(this, "Erreur lors de la suppression du compte.", Toast.LENGTH_LONG).show();
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+                runOnUiThread(() -> Toast.makeText(this, "Erreur réseau.", Toast.LENGTH_LONG).show());
+            }
+        }).start();
     }
 
 }
