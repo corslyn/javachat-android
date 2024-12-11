@@ -37,13 +37,15 @@ public class Chat extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        this.action();
+
         envoie = findViewById(R.id.sendButton);
         message = findViewById(R.id.messageInput);
         Intent intent = getIntent();
-        String user = intent.hasExtra("user") ? intent.getStringExtra("user") : "";
-        String ami = intent.hasExtra("ami") ? intent.getStringExtra("amis") : "";
-        User = user;
-        Ami= ami;
+        this.User = intent.hasExtra("user") ? intent.getStringExtra("user") : "";
+        this.Ami = intent.hasExtra("ami") ? intent.getStringExtra("amis") : "";
+
         //initialisation socket client
         DatagramSocket clientSocket = null;
         try {
@@ -52,19 +54,20 @@ public class Chat extends AppCompatActivity {
             throw new RuntimeException(e);
         }
 
-        while (suite == true){
+
+        while (suite){
             //Envoie
-            String text = "demande_message,"+ user+","+ami+","+compteur;
+            String text = "demande_message,"+ this.User+","+this.Ami+","+compteur;
             byte[] sentBytes = text.getBytes();
 
             InetAddress serverAddress = null;
             try {
-                serverAddress = InetAddress.getByName("localhost");
+                serverAddress = InetAddress.getByName(getString(R.string.ip_addr));
             } catch (UnknownHostException e) {
                 throw new RuntimeException(e);
             }
 
-            DatagramPacket sendPacket = new DatagramPacket(sentBytes, sentBytes.length, serverAddress, 1337);
+            DatagramPacket sendPacket = new DatagramPacket(sentBytes, sentBytes.length, serverAddress, R.string.port);
             try {
                 clientSocket.send(sendPacket);
             } catch (IOException e) {
@@ -81,19 +84,16 @@ public class Chat extends AppCompatActivity {
             }
 
             String message = new String (receivePacket.getData(), 0, receivePacket.getLength());
-            String[] messplit = message.split(",");
-            tabmessage[compteur] = messplit[4];
+            String[] splitted_message = message.split(",");
+            tabmessage[compteur] = splitted_message[4];
             compteur += 1;
-            if (messplit[5].equals("non")){
+            if (splitted_message[5].equals("non")){
                 suite = false;
             }
-
-
         }
-
-
     }
-    private void action(){
+
+    private void action() {
         envoie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,10 +110,8 @@ public class Chat extends AppCompatActivity {
         //initialisation socket client
         DatagramSocket clientSocket = new DatagramSocket();
 
-
-
         // Envoie
-        String text = "envoie_message,"+User+"," + Ami + message.getText().toString() ;
+        String text = "envoi_message,"+User+"," + Ami + message.getText().toString() ;
         byte[] sentBytes = text.getBytes();
 
         InetAddress serverAddress = InetAddress.getByName(getString(R.string.ip_addr));
@@ -128,11 +126,9 @@ public class Chat extends AppCompatActivity {
 
         String Message = new String (receivePacket.getData(), 0, receivePacket.getLength());
         String[] messplit = Message.split(",");
-        if (messplit[4].equals("OK")){
-            compteur +=1;
+        if (messplit[4].equals("ok")){
+            compteur += 1;
             tabmessage[compteur] = message.getText().toString();
         }
-
-
     }
 }

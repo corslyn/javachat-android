@@ -38,6 +38,7 @@ public class page_accueil extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.loggedin_page);
+        action();
         adapter = new FriendAdapter(amis, friendName -> {
             Intent chatIntent = new Intent(this, Chat.class);
             chatIntent.putExtra("nomAmi", friendName);
@@ -80,7 +81,7 @@ public class page_accueil extends AppCompatActivity {
 
             // remplissage de la liste d'amis
             int j = 4;
-            while (messplit[j].equals("true") || j < 14){
+            while (!messplit[j].equals("null") && j < 14){
                 amis.set(amis_id, messplit[j]);
                 amis_id += 1;
                 j += 1;
@@ -90,7 +91,6 @@ public class page_accueil extends AppCompatActivity {
             runOnUiThread(() -> adapter.notifyDataSetChanged());
         } catch (IOException e) {
             e.printStackTrace();
-
         }
     }
 

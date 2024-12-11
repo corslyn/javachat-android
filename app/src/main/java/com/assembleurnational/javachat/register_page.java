@@ -66,10 +66,11 @@ public class register_page extends AppCompatActivity {
         DatagramSocket clientSocket = new DatagramSocket();
 
         //envoie
-        String text = "Inscription," + name + "," + mdp;
+        String text = "inscription," + name + "," + mdp;
         byte[] sentBytes = text.getBytes();
 
-        InetAddress serverAddress = InetAddress.getByName("localhost");
+        InetAddress serverAddress = InetAddress.getByName(getString(R.string.ip_addr));
+
 
         DatagramPacket sendPacket = new DatagramPacket(sentBytes, sentBytes.length, serverAddress, 1337);
         clientSocket.send(sendPacket);
@@ -81,8 +82,8 @@ public class register_page extends AppCompatActivity {
 
         String message = new String(receivedPacket.getData(), 0, receivedPacket.getLength());
         String[] messplit = message.split(",");
-        if (messplit[3].equals("OK")) {
-            String T = "compte créer";
+        if (messplit[3].equals("ok")) {
+            String T = "compte créé";
             Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         }
 
