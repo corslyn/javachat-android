@@ -211,7 +211,7 @@ public class PageAccueil extends AppCompatActivity {
         // faire un truc mais je sais pas encore quoi
     }
 
-    private void delete(){
+    /*private void delete(){
         // faire le suppression de compte
         new Thread(() -> {
             try {
@@ -223,7 +223,7 @@ public class PageAccueil extends AppCompatActivity {
                 String response = Server.received(); // Lire la réponse du serveur
 
                 runOnUiThread(() -> {
-                    if (response.equals("succès")) {
+                    if (response.equals("")) {
                         Toast.makeText(this, "Compte supprimé avec succès.", Toast.LENGTH_LONG).show();
                         // Retour à l'écran de connexion
                         Intent loginIntent = new Intent(this, MainActivity.class);
@@ -238,6 +238,6 @@ public class PageAccueil extends AppCompatActivity {
                 runOnUiThread(() -> Toast.makeText(this, "Erreur réseau.", Toast.LENGTH_LONG).show());
             }
         }).start();
-    }
+    }*/
 
 }
