@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -20,8 +21,10 @@ import java.net.InetAddress;
 import java.util.List;
 
 public class PageAccueil extends AppCompatActivity {
-    ImageButton addFriends;
-    ImageButton delFriends;
+    Button add;
+    Button suppr;
+    EditText textAdd;
+    EditText textSuppr;
     ImageButton Settings;
     ImageButton  Delete;
     RecyclerView listeAmis;
@@ -46,8 +49,10 @@ public class PageAccueil extends AppCompatActivity {
         });
         listeAmis = findViewById(R.id.listeAmis);
         listeAmis.setAdapter(adapter);
-        addFriends = findViewById(R.id.addFriend);
-        delFriends = findViewById(R.id.deleteFriend);
+        add = findViewById(R.id.add);
+        suppr = findViewById(R.id.suppr);
+        textAdd = findViewById(R.id.textAdd);
+        textSuppr = findViewById(R.id.textSuppr);
         Delete = findViewById(R.id.delete);
         Settings = findViewById(R.id.settings);
         Demanderecu = findViewById(R.id.damis);
@@ -91,14 +96,18 @@ public class PageAccueil extends AppCompatActivity {
 
 
     private void action(){
-        addFriends.setOnClickListener(new View.OnClickListener() {
+        add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddFriend();
+                try {
+                    AddFriend();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
-        delFriends.setOnClickListener(new View.OnClickListener() {
+        suppr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DelFriend();
@@ -157,8 +166,26 @@ public class PageAccueil extends AppCompatActivity {
         }
     }
 
-    private void AddFriend() {
+    private void AddFriend() throws IOException {
         // faire commandce piur ajout d'ami
+        String ami = textAdd.getText().toString();
+        String text = "demande_ami,"+user+","+ami;
+        byte[] sentBytes = text.getBytes();
+        Server.send(sentBytes);
+
+        String message = Server.received();
+
+        String[] messplit = message.split(",");
+        if (messplit[4].equals("ok")){
+            String toast = "Demande bien envoyé";
+            Toast.makeText(this, toast, Toast.LENGTH_LONG).show();
+        }
+        else {
+            String toast = "Erreur dans la demande";
+            Toast.makeText(this, toast, Toast.LENGTH_LONG).show();
+        }
+
+
     }
 
     private void DelFriend(){
