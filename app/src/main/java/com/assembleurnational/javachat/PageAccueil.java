@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -18,6 +19,12 @@ import java.net.DatagramSocket;
 import java.util.List;
 
 public class PageAccueil extends AppCompatActivity {
+    Button ami1;
+    Button ami2;
+    Button ami3;
+    Button ami4;
+    Button ami5;
+    Button voiramis;
     Button add;
     Button suppr;
     EditText textAdd;
@@ -30,7 +37,8 @@ public class PageAccueil extends AppCompatActivity {
     int amis_id = 0;
     Button Demanderecu;
     String user;
-    String[] amipotentiel;
+    String[] amisliste;
+    TextView currentUser;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +51,7 @@ public class PageAccueil extends AppCompatActivity {
             chatIntent.putExtra("nomAmi", friendName);
             startActivity(chatIntent);
         });
-        listeAmis = findViewById(R.id.listeAmis);
+
         listeAmis.setAdapter(adapter);
 
         add = findViewById(R.id.add);
@@ -53,6 +61,15 @@ public class PageAccueil extends AppCompatActivity {
         Delete = findViewById(R.id.delete);
         Settings = findViewById(R.id.settings);
         Demanderecu = findViewById(R.id.damis);
+        currentUser = findViewById(R.id.current);
+        ami1 = findViewById(R.id.ami1);
+        ami2 = findViewById(R.id.ami2);
+        ami3 = findViewById(R.id.ami3);
+        ami4 = findViewById(R.id.ami4);
+        ami5 = findViewById(R.id.ami5);
+        voiramis = findViewById(R.id.voiramis);
+
+        currentUser.setText(user);
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,14 +93,16 @@ public class PageAccueil extends AppCompatActivity {
                 }).start();
             }
         });
-       // Delete.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-       //     public void onClick(View view) {
-        //        delete();
-        //    }
-       // });
+       Delete.setOnClickListener(new View.OnClickListener() {
+           @Override
+             public void onClick(View view) {
+               new Thread(() -> {
+                   delete();
+               }).start();
+           }
+         });
 
-        Settings.setOnClickListener(new View.OnClickListener() {
+        Settings.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 new Thread(() -> {
@@ -91,16 +110,62 @@ public class PageAccueil extends AppCompatActivity {
                 }).start();
             }
         });
-        //Demanderecu.setOnClickListener(new View.OnClickListener() {
-        //  @Override
-        //public void onClick(View view) {
-        //  try {
-        //    voirdemande();
-        //} catch (IOException e) {
-        //  throw new RuntimeException(e);
-        //}
-        //}
-        //});
+        Demanderecu.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              new Thread(() -> {
+                  try {
+                      voirdemande();
+                  } catch (IOException e) {
+                      throw new RuntimeException(e);
+                  }
+              }).start();
+              }
+          });
+
+        voiramis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(() -> {
+                    try {
+                        voiramis();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
+            }
+        });
+
+        ami1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gotochat(amisliste[0]);
+            }
+        });
+        ami2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gotochat(amisliste[1]);
+            }
+        });
+        ami3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gotochat(amisliste[2]);
+            }
+        });
+        ami4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gotochat(amisliste[3]);
+            }
+        });
+        ami5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gotochat(amisliste[4]);
+            }
+        });
 
 
 
@@ -108,54 +173,50 @@ public class PageAccueil extends AppCompatActivity {
         Intent intent = getIntent();
         String user = intent.hasExtra("user") ? intent.getStringExtra("user") : "";
 
-        //new Thread(() -> fetchFriends(user)).start();
+       // new Thread(() -> fetchFriends(user)).start();
 
 
-        //new Thread(() -> {
-        //    try {
-         //       voirdemande();
-         //   } catch (IOException e) {
-         //       throw new RuntimeException(e);
-         //   }
-      //  }).start();
 
-     //   new Thread(() -> delete()).start();
+
+
 
     }
 
 
-    //private void fetchFriends(String user) {
-       // try (DatagramSocket clientSocket = new DatagramSocket()) {
-            // envoi d'une requete au server
-         //   String request = "recuperer_amis," + user;
-         //   byte[] sentBytes = request.getBytes();
-         //   Server.send(sentBytes);
+    private void voiramis() throws IOException {
+
+             //envoi d'une requete au server
+            String request = "recuperer_amis," + user;
+            byte[] sentBytes = request.getBytes();
+            Server.send(sentBytes);
 
 
-         //   String message = Server.received();
-         //   String[] messplit = message.split(",");
+            String message = Server.received();
+            String[] messplit = message.split(",");
 
-            // remplissage de la liste d'amis
-         //   int j = 4;
-         //   while (!messplit[j].equals("null") && j < 14){
-         //       amis.set(amis_id, messplit[j]);
-          //      amis_id += 1;
-          //      j += 1;
-         //   }
+             //remplissage de la liste d'amis
+            int j = 3;
+            while ( j < 7){
+                amisliste[j-3] = (messplit[j]);
+                j += 1;
 
-            // mise a jour de l'ui
-          //  runOnUiThread(() -> adapter.notifyDataSetChanged());
-       // } catch (IOException e) {
-       //     e.printStackTrace();
-      //  }
-    //}
-
+            }
+            ami1.setText(amisliste[0]);
+            ami2.setText(amisliste[1]);
+            ami3.setText(amisliste[2]);
+            ami4.setText(amisliste[3]);
+            ami5.setText(amisliste[4]);
 
 
 
+    }
 
 
- /*   private void voirdemande() throws IOException {
+
+
+
+
+    private void voirdemande() throws IOException {
         boolean suite = true;
         int compteur = 0;
         while (suite) {
@@ -182,7 +243,7 @@ public class PageAccueil extends AppCompatActivity {
             compteur+=1;
         }
     }
-*/
+
     private void AddFriend() throws IOException {
         // faire commandce piur ajout d'ami
         String ami = textAdd.getText().toString();
@@ -216,7 +277,7 @@ public class PageAccueil extends AppCompatActivity {
         // faire un truc mais je sais pas encore quoi
     }
 
-    /*private void delete(){
+    private void delete(){
         // faire le suppression de compte
         new Thread(() -> {
             try {
@@ -243,6 +304,11 @@ public class PageAccueil extends AppCompatActivity {
                 runOnUiThread(() -> Toast.makeText(this, "Erreur réseau.", Toast.LENGTH_LONG).show());
             }
         }).start();
-    }*/
+    }
 
+    private void gotochat(String ami){
+        Intent intent = new Intent(this, Chat.class);
+        intent.putExtra("ami", ami);
+        startActivity(intent);
+    }
 }
