@@ -38,7 +38,6 @@ public class PageAccueil extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.loggedin_page);
         user = getIntent().hasExtra("user") ? getIntent().getStringExtra("user") : "";
-        action();
         adapter = new FriendAdapter(amis, friendName -> {
             Intent chatIntent = new Intent(this, Chat.class);
             chatIntent.putExtra("nomAmi", friendName);
@@ -54,6 +53,48 @@ public class PageAccueil extends AppCompatActivity {
         Delete = findViewById(R.id.delete);
         Settings = findViewById(R.id.settings);
         Demanderecu = findViewById(R.id.damis);
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    AddFriend();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        suppr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DelFriend();
+            }
+        });
+        Delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                delete();
+            }
+        });
+
+        Settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setting();
+            }
+        });
+        //Demanderecu.setOnClickListener(new View.OnClickListener() {
+        //  @Override
+        //public void onClick(View view) {
+        //  try {
+        //    voirdemande();
+        //} catch (IOException e) {
+        //  throw new RuntimeException(e);
+        //}
+        //}
+        //});
+
 
 
 
@@ -110,48 +151,8 @@ public class PageAccueil extends AppCompatActivity {
 
 
 
-    private void action(){
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    AddFriend();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
 
-        suppr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DelFriend();
-            }
-        });
-        Delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                delete();
-            }
-        });
 
-        Settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setting();
-            }
-        });
-        //Demanderecu.setOnClickListener(new View.OnClickListener() {
-          //  @Override
-            //public void onClick(View view) {
-              //  try {
-                //    voirdemande();
-                //} catch (IOException e) {
-                  //  throw new RuntimeException(e);
-                //}
-            //}
-        //});
-    }
 
  /*   private void voirdemande() throws IOException {
         boolean suite = true;
