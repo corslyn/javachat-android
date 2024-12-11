@@ -191,15 +191,15 @@ public class PageAccueil extends AppCompatActivity {
 
         String message = Server.received();
 
-        String[] messplit = message.split(",");
-        if (messplit[4].equals("ok")){
-            String T = "Demande bien envoyé";
-            System.out.println(T);
-        }
-        else {
-            String T = "Erreur dans la demande";
-            System.out.println(T);
-        }
+       // String[] messplit = message.split(",");
+       // if (messplit[4].equals("ok")){
+         //   String T = "Demande bien envoyé";
+           // System.out.println(T);
+        //}
+        //else {
+         //   String T = "Erreur dans la demande";
+          //  System.out.println(T);
+        //}
 
 
     }
