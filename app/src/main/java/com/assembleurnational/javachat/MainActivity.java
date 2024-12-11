@@ -2,7 +2,6 @@ package com.assembleurnational.javachat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,8 +17,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 
 public class MainActivity extends AppCompatActivity {
     EditText user;
@@ -64,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void page_inscription() {
-        Intent intent = new Intent(this, register_page.class);
+        Intent intent = new Intent(this, RegisterPage.class);
         startActivity(intent);
     }
 
@@ -93,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         String message = new String (receivePacket.getData(), 0, receivePacket.getLength());
         String[] messplit = message.split(",");
         if (messplit[3].equals("OK")){
-            Intent intent = new Intent(this, page_accueil.class);
+            Intent intent = new Intent(this, PageAccueil.class);
             intent.putExtra("user", user.getText().toString());
             startActivity(intent);
         }
