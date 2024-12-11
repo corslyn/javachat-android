@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import com.assembleurnational.javachat.Server;
 
 public class MainActivity extends AppCompatActivity {
     EditText user;
@@ -56,6 +57,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        new Thread(() -> {
+            try {
+                log_in();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
     }
 
 
@@ -65,10 +73,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     private void log_in() throws IOException {
 
-        //initialisation socket client
-        DatagramSocket clientSocket = new DatagramSocket();
 
         String log = user.getText().toString();
         String mdp = password.getText().toString();
@@ -77,17 +84,11 @@ public class MainActivity extends AppCompatActivity {
         String text = "connexion,"+log+"," + mdp ;
         byte[] sentBytes = text.getBytes();
 
-        InetAddress serverAddress = InetAddress.getByName(getString(R.string.ip_addr));
+        Server.send(sentBytes);
 
-        DatagramPacket sendPacket = new DatagramPacket(sentBytes, sentBytes.length, serverAddress, 1337);
-        clientSocket.send(sendPacket);
 
-        //reception
-        byte[] receiveBytes = new byte[256];
-        DatagramPacket receivePacket = new DatagramPacket(receiveBytes, receiveBytes.length);
-        clientSocket.receive(receivePacket);
 
-        String message = new String (receivePacket.getData(), 0, receivePacket.getLength());
+        String message = Server.received();
         String[] messplit = message.split(",");
         if (messplit[3].equals("OK")){
             Intent intent = new Intent(this, PageAccueil.class);

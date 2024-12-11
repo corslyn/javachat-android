@@ -60,17 +60,10 @@ public class PageAccueil extends AppCompatActivity {
             // envoi d'une requete au server
             String request = "recuperer_amis," + user;
             byte[] sentBytes = request.getBytes();
-            InetAddress serverAddress = InetAddress.getByName(getString(R.string.ip_addr));
-            DatagramPacket sendPacket = new DatagramPacket(sentBytes, sentBytes.length, serverAddress, 1337);
-            clientSocket.send(sendPacket);
+            Server.send(sentBytes);
 
-            // reception de la reponse
-            byte[] receiveBytes = new byte[256];
-            DatagramPacket receivePacket = new DatagramPacket(receiveBytes, receiveBytes.length);
-            clientSocket.receive(receivePacket);
 
-            // traitement de la reponse
-            String message = new String(receivePacket.getData(), 0, receivePacket.getLength());
+            String message = Server.received();
             String[] messplit = message.split(",");
 
             // remplissage de la liste d'amis
@@ -126,7 +119,7 @@ public class PageAccueil extends AppCompatActivity {
     }
 
     private void setting(){
-        // faire un truc mais je sais oas encore quoi
+        // faire un truc mais je sais pas encore quoi
     }
 
     private void delete(){

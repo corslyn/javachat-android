@@ -44,6 +44,14 @@ public class RegisterPage extends AppCompatActivity {
                 retours();
             }
         });
+
+        new Thread(() -> {
+            try {
+                register();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
     }
 
 
@@ -65,18 +73,10 @@ public class RegisterPage extends AppCompatActivity {
         String text = "inscription," + name + "," + mdp;
         byte[] sentBytes = text.getBytes();
 
-        InetAddress serverAddress = InetAddress.getByName(getString(R.string.ip_addr));
+        Server.send(sentBytes);
 
+        String message = Server.received();
 
-        DatagramPacket sendPacket = new DatagramPacket(sentBytes, sentBytes.length, serverAddress, 1337);
-        clientSocket.send(sendPacket);
-
-        //reception
-        byte[] receivedBytes = new byte[256];
-        DatagramPacket receivedPacket = new DatagramPacket(receivedBytes, receivedBytes.length);
-        clientSocket.receive(receivedPacket);
-
-        String message = new String(receivedPacket.getData(), 0, receivedPacket.getLength());
         String[] messplit = message.split(",");
         if (messplit[3].equals("ok")) {
             String T = "compte créé";
