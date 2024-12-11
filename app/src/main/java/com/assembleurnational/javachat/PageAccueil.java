@@ -46,13 +46,10 @@ public class PageAccueil extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.loggedin_page);
         user = getIntent().hasExtra("user") ? getIntent().getStringExtra("user") : "";
-        adapter = new FriendAdapter(amis, friendName -> {
-            Intent chatIntent = new Intent(this, Chat.class);
-            chatIntent.putExtra("nomAmi", friendName);
-            startActivity(chatIntent);
-        });
 
-        listeAmis.setAdapter(adapter);
+
+
+
 
         add = findViewById(R.id.add);
         suppr = findViewById(R.id.suppr);
