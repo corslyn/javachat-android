@@ -69,8 +69,8 @@
 
     <Button
         android:id="@+id/add"
-        android:layout_width="98dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Ajouter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,7 +83,7 @@
         android:id="@+id/suppr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="supprimer"
+        android:text="Supprimer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.784"
@@ -98,19 +98,25 @@
         android:ems="10"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.193"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.561"
-        tools:layout_editor_absoluteX="61dp" />
+        app:layout_constraintVertical_bias="0.56" />
 
     <EditText
         android:id="@+id/textSuppr"
-        android:layout_width="90dp"
-        android:layout_height="38dp"
+        android:layout_width="112dp"
+        android:layout_height="41dp"
         android:ems="10"
         android:inputType="text"
         android:text="Name"
-        tools:layout_editor_absoluteX="226dp"
-        tools:layout_editor_absoluteY="417dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.779"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.56" />
 
     <ScrollView
         android:id="@+id/scrollView2"
