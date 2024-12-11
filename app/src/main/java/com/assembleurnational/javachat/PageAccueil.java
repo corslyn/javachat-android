@@ -57,18 +57,23 @@ public class PageAccueil extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    AddFriend();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                new Thread(() -> {
+                    try {
+                        AddFriend();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
+
             }
         });
 
         suppr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DelFriend();
+                new Thread(() -> {
+                        DelFriend();
+                }).start();
             }
         });
        // Delete.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +86,9 @@ public class PageAccueil extends AppCompatActivity {
         Settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setting();
+                new Thread(() -> {
+                    setting();
+                }).start();
             }
         });
         //Demanderecu.setOnClickListener(new View.OnClickListener() {
@@ -102,13 +109,7 @@ public class PageAccueil extends AppCompatActivity {
         String user = intent.hasExtra("user") ? intent.getStringExtra("user") : "";
 
         //new Thread(() -> fetchFriends(user)).start();
-        new Thread(() -> {
-            try {
-                AddFriend();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
+
 
         //new Thread(() -> {
         //    try {
@@ -186,21 +187,23 @@ public class PageAccueil extends AppCompatActivity {
         // faire commandce piur ajout d'ami
         String ami = textAdd.getText().toString();
         String moi = user;
-        String text = "demande_ami,"+moi+","+ami;
+        String text = "demande_ami,"+moi+","+ami+"\n";
+        System.out.println(text);
         byte[] sentBytes = text.getBytes();
         Server.send(sentBytes);
 
         String message = Server.received();
+        System.out.println(message);
 
-       // String[] messplit = message.split(",");
-       // if (messplit[4].equals("ok")){
-         //   String T = "Demande bien envoyé";
-           // System.out.println(T);
-        //}
-        //else {
-         //   String T = "Erreur dans la demande";
-          //  System.out.println(T);
-        //}
+        String[] messplit = message.split(",");
+        if (messplit[2].equals("erreur")){
+            String T = "Erreur dans la demande";
+            System.out.println(T);
+        }
+        else {
+            String T = "demande bien envoyé";
+            System.out.println(T);
+        }
 
 
     }
