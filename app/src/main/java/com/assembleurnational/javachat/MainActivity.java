@@ -86,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         else {
-            //String toast = "Erreur login mdp";
+            String T = "Erreur login mdp";
+            System.out.println(T);
             //Toast.makeText(this, toast, Toast.LENGTH_LONG).show();leurnational.javachat      D  Installing profile for com.assembleurnational.javachat
             //2024-12-11 11:56:45.990  6791-6791  AssistStructure         com.assembleurnational.javachat      I  Flattened final assist data: 1624 bytes, containing 1 windows, 8 views
             //2024-12-11 11:56:46.651  6791-6791  IInputConnectionWrapper com.assem

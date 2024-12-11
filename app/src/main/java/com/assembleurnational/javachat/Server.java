@@ -24,7 +24,7 @@ public class Server {
 
     public static void send(byte[] sentBytes) throws IOException {
 
-        DatagramPacket sendPacket = new DatagramPacket(sentBytes, sentBytes.length, InetAddress.getByName(IP_ADDR), 1337);
+        DatagramPacket sendPacket = new DatagramPacket(sentBytes, sentBytes.length, InetAddress.getByName(IP_ADDR), PORT);
         clientSocket.send(sendPacket);
     }
 
