@@ -199,7 +199,9 @@ public class PageAccueil extends AppCompatActivity {
 
             }
             ami1.setText(amisliste[0]);
+            System.out.println(amisliste[0]);
             ami2.setText(amisliste[1]);
+            System.out.println(amisliste[1]);
             ami3.setText(amisliste[2]);
             ami4.setText(amisliste[3]);
             ami5.setText(amisliste[4]);
