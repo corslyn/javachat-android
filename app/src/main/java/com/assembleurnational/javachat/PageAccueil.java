@@ -37,7 +37,7 @@ public class PageAccueil extends AppCompatActivity {
     int amis_id = 0;
     Button Demanderecu;
     String user;
-    String[] amisliste;
+    String[] amisliste =  new String[5];
     TextView currentUser;
     @SuppressLint("MissingInflatedId")
     @Override
@@ -198,13 +198,18 @@ public class PageAccueil extends AppCompatActivity {
                 j += 1;
 
             }
-            ami1.setText(amisliste[0]);
-            System.out.println(amisliste[0]);
-            ami2.setText(amisliste[1]);
-            System.out.println(amisliste[1]);
-            ami3.setText(amisliste[2]);
-            ami4.setText(amisliste[3]);
-            ami5.setText(amisliste[4]);
+
+            runOnUiThread(
+                    () -> {
+                        ami1.setText(amisliste[0]);
+                        ami2.setText(amisliste[1]);
+                        ami3.setText(amisliste[2]);
+                        ami4.setText(amisliste[3]);
+                        ami5.setText(amisliste[4]);
+                    }
+            );
+
+
 
 
 
