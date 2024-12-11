@@ -42,11 +42,13 @@ public class MainActivity extends AppCompatActivity {
         log_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    log_in();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                new Thread(() -> {
+                    try {
+                        log_in();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
             }
         });
 
@@ -56,16 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 page_inscription();
             }
         });
-
-        new Thread(() -> {
-            try {
-                log_in();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
     }
-
 
 
     private void page_inscription() {
@@ -75,8 +68,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void log_in() throws IOException {
-
-
         String log = user.getText().toString();
         String mdp = password.getText().toString();
 
@@ -86,18 +77,19 @@ public class MainActivity extends AppCompatActivity {
 
         Server.send(sentBytes);
 
-
-
         String message = Server.received();
         String[] messplit = message.split(",");
-        if (messplit[3].equals("OK")){
+        if (messplit[3].equals("ok")){
+            System.out.println(messplit[3]);
             Intent intent = new Intent(this, PageAccueil.class);
             intent.putExtra("user", user.getText().toString());
             startActivity(intent);
         }
         else {
-            String toast = "Erreur login mdp";
-            Toast.makeText(this, toast, Toast.LENGTH_LONG).show();
+            //String toast = "Erreur login mdp";
+            //Toast.makeText(this, toast, Toast.LENGTH_LONG).show();leurnational.javachat      D  Installing profile for com.assembleurnational.javachat
+            //2024-12-11 11:56:45.990  6791-6791  AssistStructure         com.assembleurnational.javachat      I  Flattened final assist data: 1624 bytes, containing 1 windows, 8 views
+            //2024-12-11 11:56:46.651  6791-6791  IInputConnectionWrapper com.assem
         }
     }
 

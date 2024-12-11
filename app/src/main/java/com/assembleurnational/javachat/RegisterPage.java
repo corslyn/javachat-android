@@ -31,11 +31,13 @@ public class RegisterPage extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    register();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                new Thread(() -> {
+                    try {
+                        register();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
             }
         });
         retour.setOnClickListener(new View.OnClickListener() {
@@ -45,13 +47,6 @@ public class RegisterPage extends AppCompatActivity {
             }
         });
 
-        new Thread(() -> {
-            try {
-                register();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
     }
 
 
@@ -80,7 +75,8 @@ public class RegisterPage extends AppCompatActivity {
         String[] messplit = message.split(",");
         if (messplit[3].equals("ok")) {
             String T = "compte créé";
-            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            System.out.println(T);
+            //Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         }
 
     }

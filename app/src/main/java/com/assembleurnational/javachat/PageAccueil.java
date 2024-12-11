@@ -11,13 +11,10 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.InetAddress;
 import java.util.List;
 
 public class PageAccueil extends AppCompatActivity {
@@ -32,8 +29,7 @@ public class PageAccueil extends AppCompatActivity {
     FriendAdapter adapter;
     int amis_id = 0;
     Button Demanderecu;
-    Intent intent = getIntent();
-    String user = intent.hasExtra("user") ? intent.getStringExtra("user") : "";
+    String user;
     String[] amipotentiel;
     @SuppressLint("MissingInflatedId")
     @Override
@@ -41,6 +37,7 @@ public class PageAccueil extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.loggedin_page);
+        user = getIntent().hasExtra("user") ? getIntent().getStringExtra("user") : "";
         action();
         adapter = new FriendAdapter(amis, friendName -> {
             Intent chatIntent = new Intent(this, Chat.class);
@@ -49,6 +46,7 @@ public class PageAccueil extends AppCompatActivity {
         });
         listeAmis = findViewById(R.id.listeAmis);
         listeAmis.setAdapter(adapter);
+
         add = findViewById(R.id.add);
         suppr = findViewById(R.id.suppr);
         textAdd = findViewById(R.id.textAdd);
@@ -173,7 +171,7 @@ public class PageAccueil extends AppCompatActivity {
                 suite = false;
             }
             else{
-                 demande choix = new demande();
+                 Demande choix = new Demande();
                  choix.onCreateDialog(messplit[3], messplit[2]);
             }
             if (messplit[5].equals("non")){

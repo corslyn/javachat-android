@@ -33,6 +33,6 @@ public class Server {
         DatagramPacket receivePacket = new DatagramPacket(receiveBytes, receiveBytes.length);
         clientSocket.receive(receivePacket);
         String message = new String (receivePacket.getData(), 0, receivePacket.getLength());
-        return message;
+        return message.trim();
     }
 }

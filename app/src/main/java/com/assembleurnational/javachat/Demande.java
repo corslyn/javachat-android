@@ -3,13 +3,12 @@ package com.assembleurnational.javachat;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
 
 import java.io.IOException;
 
-public class demande extends DialogFragment {
+public class Demande extends DialogFragment {
 
     public Dialog onCreateDialog( String demandeur, String receveur ) {
         // Use the Builder class for convenient dialog construction.
