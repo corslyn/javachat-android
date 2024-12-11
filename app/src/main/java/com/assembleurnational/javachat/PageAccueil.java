@@ -69,13 +69,13 @@ public class PageAccueil extends AppCompatActivity {
             }
         }).start();
 
-        new Thread(() -> {
-            try {
-                voirdemande();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
+        //new Thread(() -> {
+        //    try {
+         //       voirdemande();
+         //   } catch (IOException e) {
+         //       throw new RuntimeException(e);
+         //   }
+      //  }).start();
 
         new Thread(() -> delete()).start();
 
@@ -141,19 +141,19 @@ public class PageAccueil extends AppCompatActivity {
                 setting();
             }
         });
-        Demanderecu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    voirdemande();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
+        //Demanderecu.setOnClickListener(new View.OnClickListener() {
+          //  @Override
+            //public void onClick(View view) {
+              //  try {
+                //    voirdemande();
+                //} catch (IOException e) {
+                  //  throw new RuntimeException(e);
+                //}
+            //}
+        //});
     }
 
-    private void voirdemande() throws IOException {
+ /*   private void voirdemande() throws IOException {
         boolean suite = true;
         int compteur = 0;
         while (suite) {
@@ -180,7 +180,7 @@ public class PageAccueil extends AppCompatActivity {
             compteur+=1;
         }
     }
-
+*/
     private void AddFriend() throws IOException {
         // faire commandce piur ajout d'ami
         String ami = textAdd.getText().toString();
@@ -192,12 +192,12 @@ public class PageAccueil extends AppCompatActivity {
 
         String[] messplit = message.split(",");
         if (messplit[4].equals("ok")){
-            String toast = "Demande bien envoyé";
-            Toast.makeText(this, toast, Toast.LENGTH_LONG).show();
+            String T = "Demande bien envoyé";
+            System.out.println(T);
         }
         else {
-            String toast = "Erreur dans la demande";
-            Toast.makeText(this, toast, Toast.LENGTH_LONG).show();
+            String T = "Erreur dans la demande";
+            System.out.println(T);
         }
 
 
