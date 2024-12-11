@@ -71,12 +71,12 @@ public class PageAccueil extends AppCompatActivity {
                 DelFriend();
             }
         });
-        Delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                delete();
-            }
-        });
+       // Delete.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+       //     public void onClick(View view) {
+        //        delete();
+        //    }
+       // });
 
         Settings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,7 +118,7 @@ public class PageAccueil extends AppCompatActivity {
          //   }
       //  }).start();
 
-        new Thread(() -> delete()).start();
+     //   new Thread(() -> delete()).start();
 
     }
 
@@ -185,7 +185,8 @@ public class PageAccueil extends AppCompatActivity {
     private void AddFriend() throws IOException {
         // faire commandce piur ajout d'ami
         String ami = textAdd.getText().toString();
-        String text = "demande_ami,"+user+","+ami;
+        String moi = user;
+        String text = "demande_ami,"+moi+","+ami;
         byte[] sentBytes = text.getBytes();
         Server.send(sentBytes);
 
