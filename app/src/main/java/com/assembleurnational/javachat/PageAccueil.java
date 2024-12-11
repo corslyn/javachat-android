@@ -63,6 +63,23 @@ public class PageAccueil extends AppCompatActivity {
         String user = intent.hasExtra("user") ? intent.getStringExtra("user") : "";
 
         new Thread(() -> fetchFriends(user)).start();
+        new Thread(() -> {
+            try {
+                AddFriend();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+
+        new Thread(() -> {
+            try {
+                voirdemande();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+
+        new Thread(() -> delete()).start();
 
     }
 
