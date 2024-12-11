@@ -60,7 +60,7 @@ public class PageAccueil extends AppCompatActivity {
         Intent intent = getIntent();
         String user = intent.hasExtra("user") ? intent.getStringExtra("user") : "";
 
-        new Thread(() -> fetchFriends(user)).start();
+        //new Thread(() -> fetchFriends(user)).start();
         new Thread(() -> {
             try {
                 AddFriend();
@@ -82,31 +82,31 @@ public class PageAccueil extends AppCompatActivity {
     }
 
 
-    private void fetchFriends(String user) {
-        try (DatagramSocket clientSocket = new DatagramSocket()) {
+    //private void fetchFriends(String user) {
+       // try (DatagramSocket clientSocket = new DatagramSocket()) {
             // envoi d'une requete au server
-            String request = "recuperer_amis," + user;
-            byte[] sentBytes = request.getBytes();
-            Server.send(sentBytes);
+         //   String request = "recuperer_amis," + user;
+         //   byte[] sentBytes = request.getBytes();
+         //   Server.send(sentBytes);
 
 
-            String message = Server.received();
-            String[] messplit = message.split(",");
+         //   String message = Server.received();
+         //   String[] messplit = message.split(",");
 
             // remplissage de la liste d'amis
-            int j = 4;
-            while (!messplit[j].equals("null") && j < 14){
-                amis.set(amis_id, messplit[j]);
-                amis_id += 1;
-                j += 1;
-            }
+         //   int j = 4;
+         //   while (!messplit[j].equals("null") && j < 14){
+         //       amis.set(amis_id, messplit[j]);
+          //      amis_id += 1;
+          //      j += 1;
+         //   }
 
             // mise a jour de l'ui
-            runOnUiThread(() -> adapter.notifyDataSetChanged());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+          //  runOnUiThread(() -> adapter.notifyDataSetChanged());
+       // } catch (IOException e) {
+       //     e.printStackTrace();
+      //  }
+    //}
 
 
 
