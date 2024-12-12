@@ -1,5 +1,6 @@
 package com.assembleurnational.javachat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +19,21 @@ public class PageAmis extends AppCompatActivity {
     TextView demande1;
     Button accepte1;
     Button refus1;
+    TextView demande2;
+    Button accepte2;
+    Button refus2;
+    TextView demande3;
+    Button accepte3;
+    Button refus3;
+    TextView demande4;
+    Button accepte4;
+    Button refus4;
+    TextView demande5;
+    Button accepte5;
+    Button refus5;
+    Button goback;
     Button voir;
+    TextView moi;
     int compteur = 0;
     String[] tabdemande = new String[5];
     @Override
@@ -33,9 +48,22 @@ public class PageAmis extends AppCompatActivity {
         });
 
         user = getIntent().hasExtra("user") ? getIntent().getStringExtra("user") : "";
+        moi.setText(user);
         demande1 = findViewById(R.id.demande1);
         accepte1 = findViewById(R.id.accepte1);
         refus1 = findViewById(R.id.refus1);
+        demande2 = findViewById(R.id.demande2);
+        accepte2 = findViewById(R.id.accepte2);
+        refus2 = findViewById(R.id.refus2);
+        demande3 = findViewById(R.id.demande3);
+        accepte3 = findViewById(R.id.accepter3);
+        refus3 = findViewById(R.id.refus3);
+        demande4 = findViewById(R.id.demande4);
+        accepte4 = findViewById(R.id.accepte4);
+        refus4 = findViewById(R.id.refus4);
+        demande5 = findViewById(R.id.demande5);
+        accepte5 = findViewById(R.id.accepte5);
+        refus5 = findViewById(R.id.refus5);
         voir = findViewById(R.id.voir);
 
 
@@ -45,6 +73,58 @@ public class PageAmis extends AppCompatActivity {
                 new Thread(() -> {
                     try {
                         oui(demande1.getText().toString());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
+            }
+        });
+
+        accepte2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(() -> {
+                    try {
+                        oui(demande2.getText().toString());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
+            }
+        });
+
+        accepte3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(() -> {
+                    try {
+                        oui(demande3.getText().toString());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
+            }
+        });
+
+        accepte4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(() -> {
+                    try {
+                        oui(demande4.getText().toString());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
+            }
+        });
+
+        accepte5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(() -> {
+                    try {
+                        oui(demande5.getText().toString());
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -65,6 +145,58 @@ public class PageAmis extends AppCompatActivity {
             }
         });
 
+        refus2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(() -> {
+                    try {
+                        non(demande2.getText().toString());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
+            }
+        });
+
+        refus3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(() -> {
+                    try {
+                        non(demande3.getText().toString());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
+            }
+        });
+
+        refus4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(() -> {
+                    try {
+                        non(demande4.getText().toString());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
+            }
+        });
+
+        refus5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(() -> {
+                    try {
+                        non(demande5.getText().toString());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
+            }
+        });
+
         voir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,6 +209,19 @@ public class PageAmis extends AppCompatActivity {
                 }).start();
             }
         });
+
+        goback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goback();
+            }
+        });
+    }
+
+    private void goback(){
+        Intent intent = new Intent(this, PageAccueil.class);
+        intent.putExtra("user", user);
+        startActivity(intent);
     }
 
     private void oui(String demandeur) throws IOException {
@@ -127,12 +272,13 @@ public class PageAmis extends AppCompatActivity {
             @Override
             public void run() {
                 demande1.setText(tabdemande[0]);
+                demande2.setText(tabdemande[1]);
+                demande3.setText(tabdemande[2]);
+                demande4.setText(tabdemande[3]);
+                demande5.setText(tabdemande[4]);
 
             }
         });
-        //demande2.setText(tabdemande[1]);
-        //demande3.setText(tabdemande[2]);
-        //demande4.setText(tabdemande[3]);
-       //demande5.setText(tabdemande[4]);
+
     }
 }
