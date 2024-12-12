@@ -193,7 +193,7 @@ public class PageAccueil extends AppCompatActivity {
 
              //remplissage de la liste d'amis
             int j = 3;
-            while ( j < 7){
+            while ( j < 8){
                 amisliste[j-3] = (messplit[j]);
                 j += 1;
 

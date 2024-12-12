@@ -31,7 +31,6 @@ public class PageAmis extends AppCompatActivity {
     TextView demande5;
     Button accepte5;
     Button refus5;
-    Button goback;
     Button voir;
     TextView moi;
     int compteur = 0;
@@ -50,7 +49,6 @@ public class PageAmis extends AppCompatActivity {
         user = getIntent().hasExtra("user") ? getIntent().getStringExtra("user") : "";
         moi = findViewById(R.id.moi);
         moi.setText(user);
-        //goback.findViewById(R.id.goback);
         demande1 = findViewById(R.id.demande1);
         accepte1 = findViewById(R.id.accepte1);
         refus1 = findViewById(R.id.refus1);
@@ -212,19 +210,11 @@ public class PageAmis extends AppCompatActivity {
             }
         });
 
-        //goback.setOnClickListener(new View.OnClickListener() {
-          //  @Override
-            //public void onClick(View view) {
-              //  goback();
-           // }
-        //});
+
     }
 
-    private void goback(){
-        Intent intent = new Intent(this, PageAccueil.class);
-        intent.putExtra("user", user);
-        startActivity(intent);
-    }
+
+
 
     private void oui(String demandeur) throws IOException {
         String request = "accepter_demande,"+demandeur+"," +user+","+"oui";
