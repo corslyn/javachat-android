@@ -24,7 +24,7 @@ import java.net.UnknownHostException;
 public class Chat extends AppCompatActivity {
     boolean suite = true;
     int compteur = 0;
-    String[] tabmessage = new String[5];;
+    String[] tabmessage = new String[10];;
     ImageButton envoie;
     String User ;
     String Ami;
@@ -145,9 +145,9 @@ public class Chat extends AppCompatActivity {
                 suite = false;
             }
             else {
-                tabmessage[compteur] = messplit[4]+" : "+messplit[5];
+                tabmessage[compteur] = messplit[messplit.length-3]+" : "+messplit[messplit.length-2];
                 compteur +=1;
-                if (messplit[6].equals("non")){
+                if (messplit[messplit.length-1].equals("non")){
                     suite = false;
                 }
             }
