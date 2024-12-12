@@ -123,10 +123,13 @@ public class PageAmis extends AppCompatActivity {
                 if (messplit[messplit.length-1].equals("non")){
                     break;
                 }
-            }
-        }
+            }}runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                demande1.setText(tabdemande[0]);
 
-        demande1.setText(tabdemande[0]);
+            }
+        });
         //demande2.setText(tabdemande[1]);
         //demande3.setText(tabdemande[2]);
         //demande4.setText(tabdemande[3]);
