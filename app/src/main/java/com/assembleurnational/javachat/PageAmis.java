@@ -234,7 +234,6 @@ public class PageAmis extends AppCompatActivity {
         String[] messplit = message.split(",");
         if(messplit[messplit.length -1].equals("ok")){
             System.out.println("demande bien accepté");
-            demande1.setText("");
         }
     }
 
@@ -248,7 +247,6 @@ public class PageAmis extends AppCompatActivity {
         String[] messplit = message.split(",");
         if(messplit[messplit.length -1].equals("ok")){
             System.out.println("demande bien refusé");
-            demande1.setText("");
         }
     }
 
