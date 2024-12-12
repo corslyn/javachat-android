@@ -60,6 +60,7 @@ public class Chat extends AppCompatActivity {
         Intent intent = getIntent();
         this.User = intent.hasExtra("user") ? intent.getStringExtra("user") : "";
         this.Ami = intent.hasExtra("ami") ? intent.getStringExtra("amis") : "";
+        assert Ami != null;
         if (Ami.equals("null")){
             Intent goback = new Intent(this, PageAccueil.class);
             intent.putExtra("user", User);
