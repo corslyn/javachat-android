@@ -135,7 +135,8 @@ public class Chat extends AppCompatActivity {
             String message = Server.received();
 
             String[] messplit = message.split(",");
-            if(messplit[6].equals("erreur")){
+            System.out.println(messplit[messplit.length-1]);
+            if(messplit[messplit.length-1].equals("erreur")){
                 suite = false;
             }
             else {
