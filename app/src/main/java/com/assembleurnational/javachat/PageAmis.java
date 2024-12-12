@@ -50,6 +50,7 @@ public class PageAmis extends AppCompatActivity {
         user = getIntent().hasExtra("user") ? getIntent().getStringExtra("user") : "";
         moi = findViewById(R.id.moi);
         moi.setText(user);
+        goback.findViewById(R.id.goback);
         demande1 = findViewById(R.id.demande1);
         accepte1 = findViewById(R.id.accepte1);
         refus1 = findViewById(R.id.refus1);
