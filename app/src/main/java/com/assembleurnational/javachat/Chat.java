@@ -36,6 +36,7 @@ public class Chat extends AppCompatActivity {
     TextView mess4;
     TextView mess5;
     Button recup;
+    Button supprmess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class Chat extends AppCompatActivity {
         mess4 = findViewById(R.id.mess4);
         mess5 = findViewById(R.id.mess5);
         recup = findViewById(R.id.recup);
+        supprmess = findViewById(R.id.supprmess);
         envoie = findViewById(R.id.sendButton);
         message = findViewById(R.id.messageInput);
         Intent intent = getIntent();
@@ -103,9 +105,28 @@ public class Chat extends AppCompatActivity {
 
             }
         });
+        supprmess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                suppr();
+            }
+        });
     }
 
+    private void suppr(){
+        tabmessage[0] = "";
+        tabmessage[1] = "";
+        tabmessage[2] = "";
+        tabmessage[3] = "";
+        tabmessage[4] = "";
+        mess1.setText("");
+        mess2.setText("");
+        mess3.setText("");
+        mess4.setText("");
+        mess5.setText("");
 
+
+    }
 
     private void envoie() throws IOException {
 
@@ -130,9 +151,9 @@ public class Chat extends AppCompatActivity {
     }
 
     private void recup() throws IOException {
-        boolean suite = true;
+
         compteur = 0;
-        while (suite || compteur < 5){
+        for(int i = 0; i<5; i++){
             String text = "demande_message,"+User+","+Ami+","+compteur;
             byte[] sentBytes = text.getBytes();
 
@@ -142,13 +163,13 @@ public class Chat extends AppCompatActivity {
             String[] messplit = message.split(",");
             System.out.println(messplit[messplit.length-1]);
             if(messplit[messplit.length-1].equals("erreur")){
-                suite = false;
+                break;
             }
             else {
                 tabmessage[compteur] = messplit[messplit.length-3]+" : "+messplit[messplit.length-2];
                 compteur +=1;
                 if (messplit[messplit.length-1].equals("non")){
-                    suite = false;
+                    break;
                 }
             }
         }
