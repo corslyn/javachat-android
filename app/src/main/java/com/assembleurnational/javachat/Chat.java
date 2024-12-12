@@ -35,8 +35,11 @@ public class Chat extends AppCompatActivity {
     TextView mess3;
     TextView mess4;
     TextView mess5;
+    TextView mess6;
+    TextView mess7;
+    TextView mess8;
     Button recup;
-    Button supprmess;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +58,10 @@ public class Chat extends AppCompatActivity {
         mess3 = findViewById(R.id.mess3);
         mess4 = findViewById(R.id.mess4);
         mess5 = findViewById(R.id.mess5);
+        mess6 = findViewById(R.id.mess6);
+        mess7 = findViewById(R.id.mess7);
+        mess8 = findViewById(R.id.mess8);
         recup = findViewById(R.id.recup);
-        supprmess = findViewById(R.id.supprmess);
         envoie = findViewById(R.id.sendButton);
         message = findViewById(R.id.messageInput);
         Intent intent = getIntent();
@@ -105,28 +110,9 @@ public class Chat extends AppCompatActivity {
 
             }
         });
-        supprmess.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                suppr();
-            }
-        });
     }
 
-    private void suppr(){
-        tabmessage[0] = "";
-        tabmessage[1] = "";
-        tabmessage[2] = "";
-        tabmessage[3] = "";
-        tabmessage[4] = "";
-        mess1.setText("");
-        mess2.setText("");
-        mess3.setText("");
-        mess4.setText("");
-        mess5.setText("");
 
-
-    }
 
     private void envoie() throws IOException {
 
@@ -146,6 +132,9 @@ public class Chat extends AppCompatActivity {
             mess3.setText(tabmessage[2]);
             mess4.setText(tabmessage[3]);
             mess5.setText(tabmessage[4]);
+            mess6.setText(tabmessage[5]);
+            mess7.setText(tabmessage[6]);
+            mess8.setText(tabmessage[7]);
 
         }
     }
@@ -153,7 +142,7 @@ public class Chat extends AppCompatActivity {
     private void recup() throws IOException {
 
         compteur = 0;
-        for(int i = 0; i<5; i++){
+        for(int i = 0; i<8; i++){
             String text = "demande_message,"+User+","+Ami+","+compteur;
             byte[] sentBytes = text.getBytes();
 
@@ -179,6 +168,9 @@ public class Chat extends AppCompatActivity {
         mess3.setText(tabmessage[2]);
         mess4.setText(tabmessage[3]);
         mess5.setText(tabmessage[4]);
+        mess6.setText(tabmessage[5]);
+        mess7.setText(tabmessage[6]);
+        mess8.setText(tabmessage[7]);
 
     }
 }
