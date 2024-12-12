@@ -1,6 +1,7 @@
 package com.assembleurnational.javachat;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ public class PageAmis extends AppCompatActivity {
     TextView demande1;
     Button accepte1;
     Button refus1;
+    Button voir;
     int compteur = 0;
     String[] tabdemande = new String[5];
     @Override
@@ -34,10 +36,51 @@ public class PageAmis extends AppCompatActivity {
         demande1 = findViewById(R.id.demande1);
         accepte1 = findViewById(R.id.accepte1);
         refus1 = findViewById(R.id.refus1);
+        voir = findViewById(R.id.voir);
+
+
+        accepte1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(() -> {
+                    try {
+                        oui(demande1.getText().toString());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
+            }
+        });
+
+        refus1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(() -> {
+                    try {
+                        non(demande1.getText().toString());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
+            }
+        });
+
+        voir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(() -> {
+                    try {
+                        voir_demande();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
+            }
+        });
     }
 
-    private void oui() throws IOException {
-        String request = "accepter_demande,"+user+"," +demande1.getText().toString()+","+"oui";
+    private void oui(String demandeur) throws IOException {
+        String request = "accepter_demande,"+user+"," +demandeur+","+"oui";
         byte[] sentBytes = request.getBytes();
         Server.send(sentBytes);
 
@@ -50,8 +93,8 @@ public class PageAmis extends AppCompatActivity {
         }
     }
 
-    private void non() throws IOException {
-        String request = "accepter_demande,"+user+"," +demande1.getText().toString()+","+"non";
+    private void non(String demandeur) throws IOException {
+        String request = "accepter_demande,"+user+"," +demandeur+","+"non";
         byte[] sentBytes = request.getBytes();
         Server.send(sentBytes);
 
@@ -84,9 +127,9 @@ public class PageAmis extends AppCompatActivity {
         }
 
         demande1.setText(tabdemande[0]);
-        demande2.setText(tabdemande[1]);
-        demande3.setText(tabdemande[2]);
-        demande4.setText(tabdemande[3]);
-        demande5.setText(tabdemande[4]);
+        //demande2.setText(tabdemande[1]);
+        //demande3.setText(tabdemande[2]);
+        //demande4.setText(tabdemande[3]);
+       //demande5.setText(tabdemande[4]);
     }
 }
