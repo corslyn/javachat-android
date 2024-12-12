@@ -80,21 +80,27 @@ public class Chat extends AppCompatActivity {
         envoie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    envoie();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                new Thread(() -> {
+                    try {
+                        envoie();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
+
             }
         });
         recup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    recup();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                new Thread(() -> {
+                    try {
+                        recup();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
+
             }
         });
     }
