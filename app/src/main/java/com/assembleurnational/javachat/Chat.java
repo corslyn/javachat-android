@@ -59,7 +59,8 @@ public class Chat extends AppCompatActivity {
         message = findViewById(R.id.messageInput);
         Intent intent = getIntent();
         this.User = intent.hasExtra("user") ? intent.getStringExtra("user") : "";
-        this.Ami = intent.hasExtra("ami") ? intent.getStringExtra("amis") : "";
+        //this.Ami = intent.hasExtra("ami") ? intent.getStringExtra("amis") : "";
+        Ami = "castex";
        // if (Ami == null){
           //  Ami = "null";
        // }
