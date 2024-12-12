@@ -160,7 +160,9 @@ public class PageAccueil extends AppCompatActivity {
         ami5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                gotochat(amisliste[4]);
+                    gotochat(amisliste[4]);
+
+
             }
         });
 
@@ -312,6 +314,7 @@ public class PageAccueil extends AppCompatActivity {
 
     private void gotochat(String ami){
         Intent intent = new Intent(this, Chat.class);
+        intent.putExtra("user", user);
         intent.putExtra("ami", ami);
         startActivity(intent);
     }

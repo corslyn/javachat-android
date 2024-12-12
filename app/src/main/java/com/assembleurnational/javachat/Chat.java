@@ -3,8 +3,10 @@ package com.assembleurnational.javachat;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,11 +24,19 @@ import java.net.UnknownHostException;
 public class Chat extends AppCompatActivity {
     boolean suite = true;
     int compteur = 0;
-    String[] tabmessage ;
+    String[] tabmessage = new String[5];;
     ImageButton envoie;
     String User ;
     String Ami;
     EditText message;
+    TextView correspondant;
+    TextView mess1;
+    TextView mess2;
+    TextView mess3;
+    TextView mess4;
+    TextView mess5;
+    Button recup;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,62 +48,29 @@ public class Chat extends AppCompatActivity {
             return insets;
         });
 
-        this.action();
-
+        correspondant = findViewById(R.id.correspondant);
+        mess1 = findViewById(R.id.mess1);
+        mess2 = findViewById(R.id.mess2);
+        mess3 = findViewById(R.id.mess3);
+        mess4 = findViewById(R.id.mess4);
+        mess5 = findViewById(R.id.mess5);
+        recup = findViewById(R.id.recup);
         envoie = findViewById(R.id.sendButton);
         message = findViewById(R.id.messageInput);
         Intent intent = getIntent();
         this.User = intent.hasExtra("user") ? intent.getStringExtra("user") : "";
         this.Ami = intent.hasExtra("ami") ? intent.getStringExtra("amis") : "";
-
-        //initialisation socket client
-        DatagramSocket clientSocket = null;
-        try {
-            clientSocket = new DatagramSocket();
-        } catch (SocketException e) {
-            throw new RuntimeException(e);
+        if (Ami.equals("null")){
+            Intent goback = new Intent(this, PageAccueil.class);
+            intent.putExtra("user", User);
+            intent.putExtra("ami", Ami);
+            startActivity(goback);
         }
+        correspondant.setText(Ami);
 
 
-        while (suite){
-            //Envoie
-            String text = "demande_message,"+ this.User+","+this.Ami+","+compteur;
-            byte[] sentBytes = text.getBytes();
 
-            InetAddress serverAddress = null;
-            try {
-                serverAddress = InetAddress.getByName(getString(R.string.ip_addr));
-            } catch (UnknownHostException e) {
-                throw new RuntimeException(e);
-            }
 
-            DatagramPacket sendPacket = new DatagramPacket(sentBytes, sentBytes.length, serverAddress, R.string.port);
-            try {
-                clientSocket.send(sendPacket);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            //reception
-            byte[] receiveBytes = new byte[256];
-            DatagramPacket receivePacket = new DatagramPacket(receiveBytes, receiveBytes.length);
-            try {
-                clientSocket.receive(receivePacket);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            String message = new String (receivePacket.getData(), 0, receivePacket.getLength());
-            String[] splitted_message = message.split(",");
-            tabmessage[compteur] = splitted_message[4];
-            compteur += 1;
-            if (splitted_message[5].equals("non")){
-                suite = false;
-            }
-        }
-    }
-
-    private void action() {
         envoie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,31 +81,65 @@ public class Chat extends AppCompatActivity {
                 }
             }
         });
+        recup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    recup();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 
+
+
     private void envoie() throws IOException {
-        //initialisation socket client
-        DatagramSocket clientSocket = new DatagramSocket();
 
         // Envoie
-        String text = "envoi_message,"+User+"," + Ami + message.getText().toString() ;
+        String text = "envoi_message,"+User+"," + Ami +","+ message.getText().toString() ;
         byte[] sentBytes = text.getBytes();
 
-        InetAddress serverAddress = InetAddress.getByName(getString(R.string.ip_addr));
+        Server.send(sentBytes);
+        String message = Server.received();
 
-        DatagramPacket sendPacket = new DatagramPacket(sentBytes, sentBytes.length, serverAddress, 1337);
-        clientSocket.send(sendPacket);
-
-        //reception
-        byte[] receiveBytes = new byte[256];
-        DatagramPacket receivePacket = new DatagramPacket(receiveBytes, receiveBytes.length);
-        clientSocket.receive(receivePacket);
-
-        String Message = new String (receivePacket.getData(), 0, receivePacket.getLength());
-        String[] messplit = Message.split(",");
+        String[] messplit = message.split(",");
         if (messplit[4].equals("ok")){
+            tabmessage[compteur] = message;
             compteur += 1;
-            tabmessage[compteur] = message.getText().toString();
+
         }
+    }
+
+    private void recup() throws IOException {
+        boolean suite = true;
+        compteur = 0;
+        while (suite || compteur < 5){
+            String text = "demande_message,"+User+","+Ami+","+compteur;
+            byte[] sentBytes = text.getBytes();
+
+            Server.send(sentBytes);
+            String message = Server.received();
+
+            String[] messplit = message.split(",");
+            if(messplit[6].equals("erreur")){
+                suite = false;
+            }
+            else {
+                tabmessage[compteur] = messplit[4]+" : "+messplit[5];
+                compteur +=1;
+                if (messplit[6].equals("non")){
+                    suite = false;
+                }
+            }
+        }
+
+        mess1.setText(tabmessage[0]);
+        mess2.setText(tabmessage[1]);
+        mess3.setText(tabmessage[2]);
+        mess4.setText(tabmessage[3]);
+        mess5.setText(tabmessage[4]);
+
     }
 }
