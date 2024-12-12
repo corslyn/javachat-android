@@ -50,7 +50,7 @@ public class PageAmis extends AppCompatActivity {
         user = getIntent().hasExtra("user") ? getIntent().getStringExtra("user") : "";
         moi = findViewById(R.id.moi);
         moi.setText(user);
-        goback.findViewById(R.id.goback);
+        //goback.findViewById(R.id.goback);
         demande1 = findViewById(R.id.demande1);
         accepte1 = findViewById(R.id.accepte1);
         refus1 = findViewById(R.id.refus1);
@@ -212,12 +212,12 @@ public class PageAmis extends AppCompatActivity {
             }
         });
 
-        goback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goback();
-            }
-        });
+        //goback.setOnClickListener(new View.OnClickListener() {
+          //  @Override
+            //public void onClick(View view) {
+              //  goback();
+           // }
+        //});
     }
 
     private void goback(){
@@ -227,7 +227,7 @@ public class PageAmis extends AppCompatActivity {
     }
 
     private void oui(String demandeur) throws IOException {
-        String request = "accepter_demande,"+user+"," +demandeur+","+"oui";
+        String request = "accepter_demande,"+demandeur+"," +user+","+"oui";
         byte[] sentBytes = request.getBytes();
         Server.send(sentBytes);
 
@@ -240,7 +240,7 @@ public class PageAmis extends AppCompatActivity {
     }
 
     private void non(String demandeur) throws IOException {
-        String request = "accepter_demande,"+user+"," +demandeur+","+"non";
+        String request = "accepter_demande,"+demandeur+"," +user+","+"non";
         byte[] sentBytes = request.getBytes();
         Server.send(sentBytes);
 
