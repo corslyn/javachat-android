@@ -58,9 +58,11 @@ public class Chat extends AppCompatActivity {
         envoie = findViewById(R.id.sendButton);
         message = findViewById(R.id.messageInput);
         Intent intent = getIntent();
-        this.User = intent.hasExtra("user") ? intent.getStringExtra("user") : "";
+        //this.User = intent.hasExtra("user") ? intent.getStringExtra("user") : "";
+        User = getIntent().hasExtra("user") ? getIntent().getStringExtra("user") : "";
+        Ami = getIntent().hasExtra("ami") ? getIntent().getStringExtra("ami") : "";
         //this.Ami = intent.hasExtra("ami") ? intent.getStringExtra("amis") : "";
-        Ami = "castex";
+        //Ami = "castex";
        // if (Ami == null){
           //  Ami = "null";
        // }
