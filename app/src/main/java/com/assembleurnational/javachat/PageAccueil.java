@@ -110,14 +110,12 @@ public class PageAccueil extends AppCompatActivity {
         Demanderecu.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-              new Thread(() -> {
-                  try {
-                      voirdemande();
-                  } catch (IOException e) {
-                      throw new RuntimeException(e);
-                  }
-              }).start();
+              try {
+                  voirdemande();
+              } catch (IOException e) {
+                  throw new RuntimeException(e);
               }
+          }
           });
 
         voiramis.setOnClickListener(new View.OnClickListener() {
@@ -223,31 +221,9 @@ public class PageAccueil extends AppCompatActivity {
 
 
     private void voirdemande() throws IOException {
-        boolean suite = true;
-        int compteur = 0;
-        while (suite) {
-            String text = "recuperer_demande," + user + "," + compteur;
-            byte[] sentBytes = text.getBytes();
-
-            Server.send(sentBytes);
-
-            String message = Server.received();
-
-            String[] messplit = message.split(",");
-            if (messplit[5].equals("erreur")){
-                String T = "pas de demande recu";
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-                suite = false;
-            }
-            else{
-                 Demande choix = new Demande();
-                 choix.onCreateDialog(messplit[3], messplit[2]);
-            }
-            if (messplit[5].equals("non")){
-                suite = false;
-            }
-            compteur+=1;
-        }
+        Intent intent = new Intent(this, PageAmis.class);
+        intent.putExtra("user", user);
+        startActivity(intent);
     }
 
     private void AddFriend() throws IOException {
