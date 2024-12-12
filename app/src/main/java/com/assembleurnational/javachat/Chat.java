@@ -117,9 +117,14 @@ public class Chat extends AppCompatActivity {
         String message = Server.received();
 
         String[] messplit = message.split(",");
-        if (messplit[4].equals("ok")){
+        if (messplit[messplit.length-1].equals("ok")){
             tabmessage[compteur] = message;
             compteur += 1;
+            mess1.setText(tabmessage[0]);
+            mess2.setText(tabmessage[1]);
+            mess3.setText(tabmessage[2]);
+            mess4.setText(tabmessage[3]);
+            mess5.setText(tabmessage[4]);
 
         }
     }
