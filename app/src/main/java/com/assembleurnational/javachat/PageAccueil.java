@@ -26,7 +26,7 @@ public class PageAccueil extends AppCompatActivity {
     Button ami5;
     Button voiramis;
     Button add;
-    Button suppr;
+    Button suppr;                       // Initialisation de quelques™ variables
     EditText textAdd;
     EditText textSuppr;
     ImageButton Settings;
@@ -37,7 +37,7 @@ public class PageAccueil extends AppCompatActivity {
     int amis_id = 0;
     Button Demanderecu;
     String user;
-    String[] amisliste =  new String[5];
+    String[] amisliste =  new String[5]; //5 amis maximum
     TextView currentUser;
     @SuppressLint("MissingInflatedId")
     @Override
@@ -170,18 +170,14 @@ public class PageAccueil extends AppCompatActivity {
         Intent intent = getIntent();
         String user = intent.hasExtra("user") ? intent.getStringExtra("user") : "";
 
-       // new Thread(() -> fetchFriends(user)).start();
-
-
-
 
 
 
     }
 
 
-    private void voiramis() throws IOException {
-
+    private void voiramis() throws IOException { // Récuper les amis qu'on a déja sur le serveur
+                                                 // Et les stock dans un tableau
              //envoi d'une requete au server
             String request = "recuperer_amis," + user;
             byte[] sentBytes = request.getBytes();
@@ -200,7 +196,7 @@ public class PageAccueil extends AppCompatActivity {
             }
 
             runOnUiThread(
-                    () -> {
+                    () -> { // Puis en remplis les bouton avec nos amis
                         ami1.setText(amisliste[0]);
                         ami2.setText(amisliste[1]);
                         ami3.setText(amisliste[2]);
@@ -221,12 +217,12 @@ public class PageAccueil extends AppCompatActivity {
 
 
     private void voirdemande() throws IOException {
-        Intent intent = new Intent(this, PageAmis.class);
+        Intent intent = new Intent(this, PageAmis.class); // Dirige vers la page pour les demande d'amis
         intent.putExtra("user", user);
         startActivity(intent);
     }
 
-    private void AddFriend() throws IOException {
+    private void AddFriend() throws IOException { //Permet d'envoyé une demande d'amis
         // faire commandce piur ajout d'ami
         String ami = textAdd.getText().toString();
         String moi = user;
@@ -289,6 +285,7 @@ public class PageAccueil extends AppCompatActivity {
     }
 
     private void gotochat(String ami){
+        // Permet d'aller sur la page de chat avec l'amis selectionné
         Intent intent = new Intent(this, Chat.class);
         intent.putExtra("user", user);
         intent.putExtra("ami", ami);

@@ -16,12 +16,12 @@ import java.io.IOException;
 
 public class PageAmis extends AppCompatActivity {
     String user;
-    TextView demande1;
+    TextView demande1;                  // Un edittext par demande d'amis potentiel
     Button accepte1;
     Button refus1;
     TextView demande2;
     Button accepte2;
-    Button refus2;
+    Button refus2;                      // Un bouton our accepter et refuser la demande par amis potentiel
     TextView demande3;
     Button accepte3;
     Button refus3;
@@ -66,7 +66,8 @@ public class PageAmis extends AppCompatActivity {
         refus5 = findViewById(R.id.refus5);
         voir = findViewById(R.id.voir);
 
-
+// les bouton suivant menent vers les fonction pour accepter ou refuser les demande
+// et donne en argument la personne ayant fait la demande
         accepte1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -217,6 +218,7 @@ public class PageAmis extends AppCompatActivity {
 
 
     private void oui(String demandeur) throws IOException {
+        // accepte la demadne avec en argument le nom de l'ami
         String request = "accepter_demande,"+demandeur+"," +user+","+"oui";
         byte[] sentBytes = request.getBytes();
         Server.send(sentBytes);
@@ -230,6 +232,7 @@ public class PageAmis extends AppCompatActivity {
     }
 
     private void non(String demandeur) throws IOException {
+        // refuse la demande avec en argument le nom du non ami
         String request = "accepter_demande,"+demandeur+"," +user+","+"non";
         byte[] sentBytes = request.getBytes();
         Server.send(sentBytes);
@@ -243,6 +246,8 @@ public class PageAmis extends AppCompatActivity {
     }
 
     public void voir_demande() throws IOException {
+        //permet de récupérer les demande d'ami qui nous sont destinés
+        // et les place dans un tableau
         for (int i = 0; i<5; i++){
             String request = "recuperer_demande," + user+","+ i;
             byte[] sentBytes = request.getBytes();
@@ -261,6 +266,7 @@ public class PageAmis extends AppCompatActivity {
             }}runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                // met le nom des personne qui nous en fait en demande dans les boutons
                 demande1.setText(tabdemande[0]);
                 demande2.setText(tabdemande[1]);
                 demande3.setText(tabdemande[2]);

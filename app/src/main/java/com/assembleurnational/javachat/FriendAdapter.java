@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
-
+// CE FICHIER NO SERT STRICTEMENT À RIEN
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendViewHolder> {
     private final List<String> amis;
     private final OnFriendClickListener listener;

@@ -52,17 +52,18 @@ public class RegisterPage extends AppCompatActivity {
 
 
     private void retours(){
+        // permet de revenir sur la page de pour se connecter
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
     private void register() throws IOException {
+        // permet d'envoyé son inscription sur le serveur
         String name = registerName.getText().toString();
         String mdp = registerPassword.getText().toString();
 
         //initialisation
 
-        DatagramSocket clientSocket = new DatagramSocket();
 
         //envoie
         String text = "inscription," + name + "," + mdp;
@@ -76,7 +77,7 @@ public class RegisterPage extends AppCompatActivity {
         if (messplit[3].equals("ok")) {
             String T = "compte créé";
             System.out.println(T);
-            //Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+
         }
 
     }

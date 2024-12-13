@@ -7,8 +7,9 @@ import java.net.InetAddress;
 import java.net.SocketException;
 
 public class Server {
+    // initialise le port et l'@ IP du serveur
     public static int PORT = 1337;
-    public static String IP_ADDR = "10.0.2.2";
+    public static String IP_ADDR = "10.0.2.2"; // localhost
     static DatagramSocket clientSocket;
 
     static {
@@ -23,12 +24,13 @@ public class Server {
     }
 
     public static void send(byte[] sentBytes) throws IOException {
-
+    // envoie le tableau de Bytes en argument au serveur
         DatagramPacket sendPacket = new DatagramPacket(sentBytes, sentBytes.length, InetAddress.getByName(IP_ADDR), PORT);
         clientSocket.send(sendPacket);
     }
 
     public static String received() throws IOException {
+        // récupere un message du serveur et le convertie en string
         byte[] receiveBytes = new byte[256];
         DatagramPacket receivePacket = new DatagramPacket(receiveBytes, receiveBytes.length);
         clientSocket.receive(receivePacket);

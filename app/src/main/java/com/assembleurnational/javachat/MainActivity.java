@@ -62,25 +62,25 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void page_inscription() {
-        Intent intent = new Intent(this, RegisterPage.class);
+        Intent intent = new Intent(this, RegisterPage.class); //Dirige vers la page pour s'inscrire
         startActivity(intent);
     }
 
 
     private void log_in() throws IOException {
-        String log = user.getText().toString();
+        String log = user.getText().toString();         //On récupere les info pour la connexion
         String mdp = password.getText().toString();
 
         // Envoie
-        String text = "connexion,"+log+"," + mdp ;
+        String text = "connexion,"+log+"," + mdp ; // On créer le message pour le serveur
         byte[] sentBytes = text.getBytes();
 
-        Server.send(sentBytes);
+        Server.send(sentBytes);     // et on l'envoie
 
-        String message = Server.received();
-        String[] messplit = message.split(",");
-        if (messplit[3].equals("ok")){
-            System.out.println(messplit[3]);
+        String message = Server.received(); // On attend la réponse du serveur
+        String[] messplit = message.split(","); // On split le message pour pouvoir l'analyser
+        if (messplit[3].equals("ok")){      // selon la reponse on fait les action voulu ici aller sur la page
+            System.out.println(messplit[3]);// de l'utilisateur
             Intent intent = new Intent(this, PageAccueil.class);
             intent.putExtra("user", user.getText().toString());
             startActivity(intent);
@@ -88,9 +88,7 @@ public class MainActivity extends AppCompatActivity {
         else {
             String T = "Erreur login mdp";
             System.out.println(T);
-            //Toast.makeText(this, toast, Toast.LENGTH_LONG).show();leurnational.javachat      D  Installing profile for com.assembleurnational.javachat
-            //2024-12-11 11:56:45.990  6791-6791  AssistStructure         com.assembleurnational.javachat      I  Flattened final assist data: 1624 bytes, containing 1 windows, 8 views
-            //2024-12-11 11:56:46.651  6791-6791  IInputConnectionWrapper com.assem
+
         }
     }
 
